@@ -1,5 +1,6 @@
 package com.geniusclone.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.geniusclone.helpers.GameAssetLoader;
+import com.geniusclone.screens.MenuScreen;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameplayClassic implements InputProcessor {
+    private Game myGame;
     private boolean isPlayerTurn = false; // Check if it is player's turn
     private boolean isPlayingSquare = false; // Check if a square is playing
     private int squarePlayingID = 0; // ID of the square that is playing
@@ -21,6 +24,9 @@ public class GameplayClassic implements InputProcessor {
     private int currentLevel = 1; // Current player's level
     private int currentPlay = 0; // Current square player is playing in array
     private int mistakesRemaining = 3; // Number of mistakes the player may make
+
+    private boolean isRestartButtonDown = false;
+    private boolean isBackButtonDown = false;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -33,7 +39,8 @@ public class GameplayClassic implements InputProcessor {
 
     private GameState currentState;
 
-    public GameplayClassic() {
+    public GameplayClassic(Game g) {
+        myGame = g;
         GameAssetLoader.load();
 
         currentState = GameState.READY;
@@ -151,6 +158,8 @@ public class GameplayClassic implements InputProcessor {
                 GameAssetLoader.font.draw(batch, levelToString(), 20, 140);
                 GameAssetLoader.font.draw(batch, "Mistakes remaining: " + mistakesRemaining, 20, 120);
                 batch.draw(GameAssetLoader.gameoverTexture, 0, 0);
+                batch.draw((isRestartButtonDown) ? GameAssetLoader.restartButtonPressed : GameAssetLoader.restartButtonReleased, 170, 183);
+                batch.draw((isBackButtonDown) ? GameAssetLoader.backButtonPressed : GameAssetLoader.backButtonReleased, 36, 183);
                 batch.end();
                 break;
             }
@@ -215,6 +224,16 @@ public class GameplayClassic implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        switch (currentState) {
+            case GAMEOVER: {
+                if (checkTouchRegion(screenX, screenY, 170, 183, 120, 131)) {
+                    isRestartButtonDown = true;
+                } else if (checkTouchRegion(screenX, screenY, 36, 183, 120, 131)) {
+                    isBackButtonDown = true;
+                }
+                break;
+            }
+        }
         return true;
     }
 
@@ -225,6 +244,7 @@ public class GameplayClassic implements InputProcessor {
                 if (checkTouchRegion(screenX, screenY, 120, 265, 87, 103)) {
                     currentState = GameState.RUNNING;
                 }
+                break;
             }
             case RUNNING: {
                 if (isPlayerTurn) {
@@ -305,7 +325,29 @@ public class GameplayClassic implements InputProcessor {
                         }
                     }
                 }
+                break;
             }
+            case GAMEOVER: {
+                if (checkTouchRegion(screenX, screenY, 170, 183, 120, 131) && isRestartButtonDown) {
+                    isPlayerTurn = false;
+                    isPlayingSquare = false;
+                    squarePlayingID = 0;
+                    startPlayingSquare = 0;
+                    currentLevel = 1;
+                    currentPlay = 0;
+                    mistakesRemaining = 3;
+                    isRestartButtonDown = false;
+                    isBackButtonDown = false;
+                    currentState = GameState.RUNNING;
+                } else if (checkTouchRegion(screenX, screenY, 36, 183, 120, 131)) {
+                    myGame.setScreen(new MenuScreen(myGame));
+                    this.dispose();
+                }
+
+                isRestartButtonDown = false;
+                isBackButtonDown = false;
+            }
+            break;
         }
         return true;
     }
