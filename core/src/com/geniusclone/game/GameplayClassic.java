@@ -261,12 +261,13 @@ public class GameplayClassic implements InputProcessor {
                                     startPlayingSquare = System.currentTimeMillis() + 1000;
                                 }
                             } else {
-                                GameAssetLoader.errorSound.play();
                                 mistakesRemaining--;
                                 if (mistakesRemaining < 1) {
                                     currentState = GameState.GAMEOVER;
                                     GameAssetLoader.gameoverSound.play();
                                 }
+                                else
+                                    GameAssetLoader.errorSound.play();
                             }
                         } else if (checkTouchRegion(screenX, screenY, (int) yellowSquare.getX(), (int) yellowSquare.getY(), (int) yellowSquare.getWidth(), (int) yellowSquare.getHeight())) { // Yellow
                             if (arrayColors.get(currentPlay) == 1) {
@@ -279,12 +280,13 @@ public class GameplayClassic implements InputProcessor {
                                     startPlayingSquare = System.currentTimeMillis() + 1000;
                                 }
                             } else {
-                                GameAssetLoader.errorSound.play();
                                 mistakesRemaining--;
                                 if (mistakesRemaining < 1) {
                                     currentState = GameState.GAMEOVER;
                                     GameAssetLoader.gameoverSound.play();
                                 }
+                                else
+                                    GameAssetLoader.errorSound.play();
                             }
                         } else if (checkTouchRegion(screenX, screenY, (int) blueSquare.getX(), (int) blueSquare.getY(), (int) blueSquare.getWidth(), (int) blueSquare.getHeight())) { // Blue
                             if (arrayColors.get(currentPlay) == 2) {
@@ -297,12 +299,13 @@ public class GameplayClassic implements InputProcessor {
                                     startPlayingSquare = System.currentTimeMillis() + 1000;
                                 }
                             } else {
-                                GameAssetLoader.errorSound.play();
                                 mistakesRemaining--;
                                 if (mistakesRemaining < 1) {
                                     currentState = GameState.GAMEOVER;
                                     GameAssetLoader.gameoverSound.play();
                                 }
+                                else
+                                    GameAssetLoader.errorSound.play();
                             }
                         } else if (checkTouchRegion(screenX, screenY, (int) greenSquare.getX(), (int) greenSquare.getY(), (int) greenSquare.getWidth(), (int) greenSquare.getHeight())) { // Green
                             if (arrayColors.get(currentPlay) == 3) {
@@ -315,12 +318,13 @@ public class GameplayClassic implements InputProcessor {
                                     startPlayingSquare = System.currentTimeMillis() + 1000;
                                 }
                             } else {
-                                GameAssetLoader.errorSound.play();
                                 mistakesRemaining--;
                                 if (mistakesRemaining < 1) {
                                     currentState = GameState.GAMEOVER;
                                     GameAssetLoader.gameoverSound.play();
                                 }
+                                else
+                                    GameAssetLoader.errorSound.play();
                             }
                         }
                     }
