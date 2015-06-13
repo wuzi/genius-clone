@@ -12,7 +12,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game g) {
         myGame = g;
-        gameplay = new GameplayClassic();
+        gameplay = new GameplayClassic(myGame);
         Gdx.input.setInputProcessor(gameplay);
     }
 
