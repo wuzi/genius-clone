@@ -2,8 +2,6 @@ package com.geniusclone.helpers;
 
 import com.badlogic.gdx.InputProcessor;
 
-import com.geniusclone.UI.SimpleButton;
-
 public class MenuInputHandler implements InputProcessor {
     private SimpleButton playButton;
     private SimpleButton exitButton;

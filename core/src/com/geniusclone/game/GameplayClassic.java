@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.geniusclone.helpers.GameAssetLoader;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,32 +33,34 @@ public class GameplayClassic implements InputProcessor {
     private GameState currentState;
 
     public GameplayClassic() {
+        GameAssetLoader.load();
+
         currentState = GameState.READY;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 320, 480);
         batch = new SpriteBatch();
 
-        redSquare = new Sprite(com.geniusclone.helpers.AssetLoader.redSquare);
+        redSquare = new Sprite(GameAssetLoader.redSquare);
         redSquare.setPosition(0, 160);
-        redSquareGlow = new Sprite(com.geniusclone.helpers.AssetLoader.redSquareGlow);
+        redSquareGlow = new Sprite(GameAssetLoader.redSquareGlow);
         redSquareGlow.setPosition(0, 160);
 
-        yellowSquare = new Sprite(com.geniusclone.helpers.AssetLoader.yellowSquare);
+        yellowSquare = new Sprite(GameAssetLoader.yellowSquare);
         yellowSquare.setPosition(0, 320);
-        yellowSquareGlow = new Sprite(com.geniusclone.helpers.AssetLoader.yellowSquareGlow);
+        yellowSquareGlow = new Sprite(GameAssetLoader.yellowSquareGlow);
         yellowSquareGlow.setPosition(0, 320);
 
-        greenSquare = new Sprite(com.geniusclone.helpers.AssetLoader.greenSquare);
+        greenSquare = new Sprite(GameAssetLoader.greenSquare);
         greenSquare.setPosition(160, 160);
-        greenSquareGlow = new Sprite(com.geniusclone.helpers.AssetLoader.greenSquareGlow);
+        greenSquareGlow = new Sprite(GameAssetLoader.greenSquareGlow);
         greenSquareGlow.setPosition(160, 160);
 
-        blueSquare = new Sprite(com.geniusclone.helpers.AssetLoader.blueSquare);
+        blueSquare = new Sprite(GameAssetLoader.blueSquare);
         blueSquare.setPosition(160, 320);
-        blueSquareGlow = new Sprite(com.geniusclone.helpers.AssetLoader.blueSquareGlow);
+        blueSquareGlow = new Sprite(GameAssetLoader.blueSquareGlow);
         blueSquareGlow.setPosition(160, 320);
 
-        circle = new Sprite(com.geniusclone.helpers.AssetLoader.circleTexture);
+        circle = new Sprite(GameAssetLoader.circleTexture);
         circle.setPosition(118, 247);
     }
 
@@ -68,14 +71,14 @@ public class GameplayClassic implements InputProcessor {
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 batch.setProjectionMatrix(camera.combined);
                 batch.begin();
-                batch.draw(com.geniusclone.helpers.AssetLoader.gameplayBgTexture, 0, 0);
-                batch.draw(com.geniusclone.helpers.AssetLoader.redSquare, redSquare.getX(), redSquare.getY());
-                batch.draw(com.geniusclone.helpers.AssetLoader.yellowSquare, yellowSquare.getX(), yellowSquare.getY());
-                batch.draw(com.geniusclone.helpers.AssetLoader.blueSquare, blueSquare.getX(), blueSquare.getY());
-                batch.draw(com.geniusclone.helpers.AssetLoader.greenSquare, greenSquare.getX(), greenSquare.getY());
-                batch.draw(com.geniusclone.helpers.AssetLoader.circleTexture, 120, 265);
-                com.geniusclone.helpers.AssetLoader.font.draw(batch, "Start", 138, 325);
-                com.geniusclone.helpers.AssetLoader.font.draw(batch, "Touch start to begin", 70, 50);
+                batch.draw(GameAssetLoader.gameplayBgTexture, 0, 0);
+                batch.draw(GameAssetLoader.redSquare, redSquare.getX(), redSquare.getY());
+                batch.draw(GameAssetLoader.yellowSquare, yellowSquare.getX(), yellowSquare.getY());
+                batch.draw(GameAssetLoader.blueSquare, blueSquare.getX(), blueSquare.getY());
+                batch.draw(GameAssetLoader.greenSquare, greenSquare.getX(), greenSquare.getY());
+                batch.draw(GameAssetLoader.circleTexture, 120, 265);
+                GameAssetLoader.font.draw(batch, "Start", 138, 325);
+                GameAssetLoader.font.draw(batch, "Touch start to begin", 70, 50);
                 batch.end();
                 break;
             }
@@ -84,41 +87,37 @@ public class GameplayClassic implements InputProcessor {
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 batch.setProjectionMatrix(camera.combined);
                 batch.begin();
-                batch.draw(com.geniusclone.helpers.AssetLoader.gameplayBgTexture, 0, 0);
-                batch.draw(com.geniusclone.helpers.AssetLoader.redSquare, redSquare.getX(), redSquare.getY());
-                batch.draw(com.geniusclone.helpers.AssetLoader.yellowSquare, yellowSquare.getX(), yellowSquare.getY());
-                batch.draw(com.geniusclone.helpers.AssetLoader.blueSquare, blueSquare.getX(), blueSquare.getY());
-                batch.draw(com.geniusclone.helpers.AssetLoader.greenSquare, greenSquare.getX(), greenSquare.getY());
-                com.geniusclone.helpers.AssetLoader.font.draw(batch, levelToString(), 20, 140);
+                batch.draw(GameAssetLoader.gameplayBgTexture, 0, 0);
+                batch.draw(GameAssetLoader.redSquare, redSquare.getX(), redSquare.getY());
+                batch.draw(GameAssetLoader.yellowSquare, yellowSquare.getX(), yellowSquare.getY());
+                batch.draw(GameAssetLoader.blueSquare, blueSquare.getX(), blueSquare.getY());
+                batch.draw(GameAssetLoader.greenSquare, greenSquare.getX(), greenSquare.getY());
+                GameAssetLoader.font.draw(batch, levelToString(), 20, 140);
 
                 // If a square is playing and it is still playing
                 // startPlayingSquare is the time it will play
                 // draw the square glowing on the screen
-                if(isPlayingSquare && startPlayingSquare > System.currentTimeMillis()) {
-                    if(squarePlayingID == 0) {
-                        batch.draw(com.geniusclone.helpers.AssetLoader.redSquareGlow, redSquareGlow.getX(), redSquareGlow.getY());
-                    }
-                    else if(squarePlayingID == 1) {
-                        batch.draw(com.geniusclone.helpers.AssetLoader.yellowSquareGlow, yellowSquareGlow.getX(), yellowSquareGlow.getY());
-                    }
-                    else if(squarePlayingID == 2) {
-                        batch.draw(com.geniusclone.helpers.AssetLoader.blueSquareGlow, blueSquareGlow.getX(), blueSquareGlow.getY());
-                    }
-                    else if(squarePlayingID == 3) {
-                        batch.draw(com.geniusclone.helpers.AssetLoader.greenSquareGlow, greenSquareGlow.getX(), greenSquareGlow.getY());
+                if (isPlayingSquare && startPlayingSquare > System.currentTimeMillis()) {
+                    if (squarePlayingID == 0) {
+                        batch.draw(GameAssetLoader.redSquareGlow, redSquareGlow.getX(), redSquareGlow.getY());
+                    } else if (squarePlayingID == 1) {
+                        batch.draw(GameAssetLoader.yellowSquareGlow, yellowSquareGlow.getX(), yellowSquareGlow.getY());
+                    } else if (squarePlayingID == 2) {
+                        batch.draw(GameAssetLoader.blueSquareGlow, blueSquareGlow.getX(), blueSquareGlow.getY());
+                    } else if (squarePlayingID == 3) {
+                        batch.draw(GameAssetLoader.greenSquareGlow, greenSquareGlow.getX(), greenSquareGlow.getY());
                     }
                 }
 
                 batch.end();
 
                 // If it is not player turn, the computer will play the squares
-                if(!isPlayerTurn) {
-                    if(currentPlay < currentLevel && startPlayingSquare < System.currentTimeMillis()) {
-                        if(currentPlay < arrayColors.size()) {
+                if (!isPlayerTurn) {
+                    if (currentPlay < currentLevel && startPlayingSquare < System.currentTimeMillis()) {
+                        if (currentPlay < arrayColors.size()) {
                             playSquare(arrayColors.get(currentPlay));
                             currentPlay++;
-                        }
-                        else {
+                        } else {
                             Random rand = new Random();
                             int color = rand.nextInt(4);
                             arrayColors.add(color);
@@ -127,7 +126,7 @@ public class GameplayClassic implements InputProcessor {
                         }
                     }
                     // if the computer played all the squares, it will give the turn to the player and stop playing squares
-                    else if(currentPlay == currentLevel && isPlayingSquare && startPlayingSquare < System.currentTimeMillis()) {
+                    else if (currentPlay == currentLevel && isPlayingSquare && startPlayingSquare < System.currentTimeMillis()) {
                         isPlayingSquare = false;
                         isPlayerTurn = true;
                         currentPlay = 0;
@@ -147,28 +146,28 @@ public class GameplayClassic implements InputProcessor {
                 // if it is the computer that is going to play 1000(1sec) delay is good, if it is the player we don't need delay (50ms for safe)
                 startPlayingSquare = (!isPlayerTurn) ? System.currentTimeMillis() + (1000 - (currentLevel * 25)) : System.currentTimeMillis() + 50;
                 // playing the sound
-                com.geniusclone.helpers.AssetLoader.redsound.play();
+                GameAssetLoader.redsound.play();
                 break;
             }
             case 1: { // Yellow
                 isPlayingSquare = true;
                 squarePlayingID = 1;
                 startPlayingSquare = (!isPlayerTurn) ? System.currentTimeMillis() + (1000 - (currentLevel * 25)) : System.currentTimeMillis() + 50;
-                com.geniusclone.helpers.AssetLoader.yellowsound.play();
+                GameAssetLoader.yellowsound.play();
                 break;
             }
             case 2: { // Blue
                 isPlayingSquare = true;
                 squarePlayingID = 2;
                 startPlayingSquare = (!isPlayerTurn) ? System.currentTimeMillis() + (1000 - (currentLevel * 25)) : System.currentTimeMillis() + 50;
-                com.geniusclone.helpers.AssetLoader.bluesound.play();
+                GameAssetLoader.bluesound.play();
                 break;
             }
             case 3: { // Green
                 isPlayingSquare = true;
                 squarePlayingID = 3;
                 startPlayingSquare = (!isPlayerTurn) ? System.currentTimeMillis() + (1000 - (currentLevel * 25)) : System.currentTimeMillis() + 50;
-                com.geniusclone.helpers.AssetLoader.greensound.play();
+                GameAssetLoader.greensound.play();
                 break;
             }
         }
@@ -180,6 +179,7 @@ public class GameplayClassic implements InputProcessor {
 
     public void dispose() {
         batch.dispose();
+        GameAssetLoader.dispose();
     }
 
     private boolean checkTouchRegion(float ix, float iy, int x, int y, int w, int h) {
@@ -202,72 +202,65 @@ public class GameplayClassic implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         switch (currentState) {
             case READY: {
-                if(checkTouchRegion(screenX, screenY, 120, 265, 87, 103)) {
+                if (checkTouchRegion(screenX, screenY, 120, 265, 87, 103)) {
                     currentState = GameState.RUNNING;
                 }
             }
             case RUNNING: {
-                if(isPlayerTurn) {
-                    if(currentPlay < currentLevel && startPlayingSquare < System.currentTimeMillis()) {
+                if (isPlayerTurn) {
+                    if (currentPlay < currentLevel && startPlayingSquare < System.currentTimeMillis()) {
                         startPlayingSquare = System.currentTimeMillis() + 50;
-                        if(checkTouchRegion(screenX, screenY, (int)redSquare.getX(), (int)redSquare.getY(), (int)redSquare.getWidth(), (int)redSquare.getHeight())) { // Red
-                            if(arrayColors.get(currentPlay) == 0) {
+                        if (checkTouchRegion(screenX, screenY, (int) redSquare.getX(), (int) redSquare.getY(), (int) redSquare.getWidth(), (int) redSquare.getHeight())) { // Red
+                            if (arrayColors.get(currentPlay) == 0) {
                                 playSquare(0);
                                 currentPlay++;
-                                if(currentPlay == currentLevel) {
+                                if (currentPlay == currentLevel) {
                                     currentPlay = 0;
                                     currentLevel++;
                                     isPlayerTurn = false;
                                     startPlayingSquare = System.currentTimeMillis() + 1000;
                                 }
+                            } else {
+                                GameAssetLoader.errorSound.play();
                             }
-                            else {
-                                com.geniusclone.helpers.AssetLoader.errorSound.play();
-                            }
-                        }
-                        else if(checkTouchRegion(screenX, screenY, (int)yellowSquare.getX(), (int)yellowSquare.getY(), (int)yellowSquare.getWidth(), (int)yellowSquare.getHeight())) { // Yellow
-                            if(arrayColors.get(currentPlay) == 1) {
+                        } else if (checkTouchRegion(screenX, screenY, (int) yellowSquare.getX(), (int) yellowSquare.getY(), (int) yellowSquare.getWidth(), (int) yellowSquare.getHeight())) { // Yellow
+                            if (arrayColors.get(currentPlay) == 1) {
                                 playSquare(1);
                                 currentPlay++;
-                                if(currentPlay == currentLevel) {
+                                if (currentPlay == currentLevel) {
                                     currentPlay = 0;
                                     currentLevel++;
                                     isPlayerTurn = false;
                                     startPlayingSquare = System.currentTimeMillis() + 1000;
                                 }
+                            } else {
+                                GameAssetLoader.errorSound.play();
                             }
-                            else {
-                                com.geniusclone.helpers.AssetLoader.errorSound.play();
-                            }
-                        }
-                        else if(checkTouchRegion(screenX, screenY, (int)blueSquare.getX(), (int)blueSquare.getY(), (int)blueSquare.getWidth(), (int)blueSquare.getHeight())) { // Blue
-                            if(arrayColors.get(currentPlay) == 2) {
+                        } else if (checkTouchRegion(screenX, screenY, (int) blueSquare.getX(), (int) blueSquare.getY(), (int) blueSquare.getWidth(), (int) blueSquare.getHeight())) { // Blue
+                            if (arrayColors.get(currentPlay) == 2) {
                                 playSquare(2);
                                 currentPlay++;
-                                if(currentPlay == currentLevel) {
+                                if (currentPlay == currentLevel) {
                                     currentPlay = 0;
                                     currentLevel++;
                                     isPlayerTurn = false;
                                     startPlayingSquare = System.currentTimeMillis() + 1000;
                                 }
+                            } else {
+                                GameAssetLoader.errorSound.play();
                             }
-                            else {
-                                com.geniusclone.helpers.AssetLoader.errorSound.play();
-                            }
-                        }
-                        else if(checkTouchRegion(screenX, screenY, (int)greenSquare.getX(), (int)greenSquare.getY(), (int)greenSquare.getWidth(), (int)greenSquare.getHeight())) { // Green
-                            if(arrayColors.get(currentPlay) == 3) {
+                        } else if (checkTouchRegion(screenX, screenY, (int) greenSquare.getX(), (int) greenSquare.getY(), (int) greenSquare.getWidth(), (int) greenSquare.getHeight())) { // Green
+                            if (arrayColors.get(currentPlay) == 3) {
                                 playSquare(3);
                                 currentPlay++;
-                                if(currentPlay == currentLevel) {
+                                if (currentPlay == currentLevel) {
                                     currentPlay = 0;
                                     currentLevel++;
                                     isPlayerTurn = false;
                                     startPlayingSquare = System.currentTimeMillis() + 1000;
                                 }
-                            }
-                            else {
-                                com.geniusclone.helpers.AssetLoader.errorSound.play();
+                            } else {
+                                GameAssetLoader.errorSound.play();
                             }
                         }
                     }
