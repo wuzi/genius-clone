@@ -20,6 +20,7 @@ public class GameplayClassic implements InputProcessor {
 
     private int currentLevel = 1; // Current player's level
     private int currentPlay = 0; // Current square player is playing in array
+    private int mistakesRemaining = 3; // Number of mistakes the player may make
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -62,6 +63,8 @@ public class GameplayClassic implements InputProcessor {
 
         circle = new Sprite(GameAssetLoader.circleTexture);
         circle.setPosition(118, 247);
+
+
     }
 
     public void render() {
@@ -71,14 +74,14 @@ public class GameplayClassic implements InputProcessor {
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 batch.setProjectionMatrix(camera.combined);
                 batch.begin();
-                batch.draw(GameAssetLoader.gameplayBgTexture, 0, 0);
+                batch.draw(GameAssetLoader.backgroundTexture, 0, 0);
                 batch.draw(GameAssetLoader.redSquare, redSquare.getX(), redSquare.getY());
                 batch.draw(GameAssetLoader.yellowSquare, yellowSquare.getX(), yellowSquare.getY());
                 batch.draw(GameAssetLoader.blueSquare, blueSquare.getX(), blueSquare.getY());
                 batch.draw(GameAssetLoader.greenSquare, greenSquare.getX(), greenSquare.getY());
                 batch.draw(GameAssetLoader.circleTexture, 120, 265);
-                GameAssetLoader.font.draw(batch, "Start", 138, 325);
-                GameAssetLoader.font.draw(batch, "Touch start to begin", 70, 50);
+                GameAssetLoader.font.draw(batch, "START", 138, 325);
+                GameAssetLoader.font.draw(batch, "Touch start to begin", 80, 50);
                 batch.end();
                 break;
             }
@@ -87,12 +90,13 @@ public class GameplayClassic implements InputProcessor {
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 batch.setProjectionMatrix(camera.combined);
                 batch.begin();
-                batch.draw(GameAssetLoader.gameplayBgTexture, 0, 0);
+                batch.draw(GameAssetLoader.backgroundTexture, 0, 0);
                 batch.draw(GameAssetLoader.redSquare, redSquare.getX(), redSquare.getY());
                 batch.draw(GameAssetLoader.yellowSquare, yellowSquare.getX(), yellowSquare.getY());
                 batch.draw(GameAssetLoader.blueSquare, blueSquare.getX(), blueSquare.getY());
                 batch.draw(GameAssetLoader.greenSquare, greenSquare.getX(), greenSquare.getY());
                 GameAssetLoader.font.draw(batch, levelToString(), 20, 140);
+                GameAssetLoader.font.draw(batch, "Mistakes remaining: " + mistakesRemaining, 20, 120);
 
                 // If a square is playing and it is still playing
                 // startPlayingSquare is the time it will play
@@ -132,6 +136,22 @@ public class GameplayClassic implements InputProcessor {
                         currentPlay = 0;
                     }
                 }
+                break;
+            }
+            case GAMEOVER: {
+                Gdx.gl.glClearColor(225 / 255f, 225 / 255f, 225 / 255f, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                batch.setProjectionMatrix(camera.combined);
+                batch.begin();
+                batch.draw(GameAssetLoader.backgroundTexture, 0, 0);
+                batch.draw(GameAssetLoader.redSquare, redSquare.getX(), redSquare.getY());
+                batch.draw(GameAssetLoader.yellowSquare, yellowSquare.getX(), yellowSquare.getY());
+                batch.draw(GameAssetLoader.blueSquare, blueSquare.getX(), blueSquare.getY());
+                batch.draw(GameAssetLoader.greenSquare, greenSquare.getX(), greenSquare.getY());
+                GameAssetLoader.font.draw(batch, levelToString(), 20, 140);
+                GameAssetLoader.font.draw(batch, "Mistakes remaining: " + mistakesRemaining, 20, 120);
+                batch.draw(GameAssetLoader.gameoverTexture, 0, 0);
+                batch.end();
                 break;
             }
         }
@@ -174,7 +194,7 @@ public class GameplayClassic implements InputProcessor {
     }
 
     private String levelToString() {
-        return "Lvl. " + currentLevel;
+        return "Level: " + currentLevel;
     }
 
     public void dispose() {
@@ -222,6 +242,11 @@ public class GameplayClassic implements InputProcessor {
                                 }
                             } else {
                                 GameAssetLoader.errorSound.play();
+                                mistakesRemaining--;
+                                if (mistakesRemaining < 1) {
+                                    currentState = GameState.GAMEOVER;
+                                    GameAssetLoader.gameoverSound.play();
+                                }
                             }
                         } else if (checkTouchRegion(screenX, screenY, (int) yellowSquare.getX(), (int) yellowSquare.getY(), (int) yellowSquare.getWidth(), (int) yellowSquare.getHeight())) { // Yellow
                             if (arrayColors.get(currentPlay) == 1) {
@@ -235,6 +260,11 @@ public class GameplayClassic implements InputProcessor {
                                 }
                             } else {
                                 GameAssetLoader.errorSound.play();
+                                mistakesRemaining--;
+                                if (mistakesRemaining < 1) {
+                                    currentState = GameState.GAMEOVER;
+                                    GameAssetLoader.gameoverSound.play();
+                                }
                             }
                         } else if (checkTouchRegion(screenX, screenY, (int) blueSquare.getX(), (int) blueSquare.getY(), (int) blueSquare.getWidth(), (int) blueSquare.getHeight())) { // Blue
                             if (arrayColors.get(currentPlay) == 2) {
@@ -248,6 +278,11 @@ public class GameplayClassic implements InputProcessor {
                                 }
                             } else {
                                 GameAssetLoader.errorSound.play();
+                                mistakesRemaining--;
+                                if (mistakesRemaining < 1) {
+                                    currentState = GameState.GAMEOVER;
+                                    GameAssetLoader.gameoverSound.play();
+                                }
                             }
                         } else if (checkTouchRegion(screenX, screenY, (int) greenSquare.getX(), (int) greenSquare.getY(), (int) greenSquare.getWidth(), (int) greenSquare.getHeight())) { // Green
                             if (arrayColors.get(currentPlay) == 3) {
@@ -261,6 +296,11 @@ public class GameplayClassic implements InputProcessor {
                                 }
                             } else {
                                 GameAssetLoader.errorSound.play();
+                                mistakesRemaining--;
+                                if (mistakesRemaining < 1) {
+                                    currentState = GameState.GAMEOVER;
+                                    GameAssetLoader.gameoverSound.play();
+                                }
                             }
                         }
                     }

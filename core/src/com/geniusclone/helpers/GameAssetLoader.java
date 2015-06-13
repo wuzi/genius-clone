@@ -2,24 +2,30 @@ package com.geniusclone.helpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class GameAssetLoader {
-    public static Texture squareTexture, squareTextureGlow, circleTexture, gameplayBgTexture;
+    public static Texture squareTexture, squareTextureGlow, circleTexture, backgroundTexture, gameoverTexture;
     public static TextureRegion greenSquare, redSquare, yellowSquare, blueSquare;
     public static TextureRegion greenSquareGlow, redSquareGlow, yellowSquareGlow, blueSquareGlow;
-    public static Sound redsound, bluesound, yellowsound, greensound, errorSound;
+    public static Sound redsound, bluesound, yellowsound, greensound, errorSound, gameoverSound;
     public static BitmapFont font;
 
     public static void load() {
-        // Gameplay Background
-        gameplayBgTexture = new Texture("images/gameplay/background.png");
-        gameplayBgTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        // gameplay background
+        backgroundTexture = new Texture("images/gameplay/background.png");
+        backgroundTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-        // gameplayTextures
+        // gameover texture
+        gameoverTexture = new Texture("images/gameplay/greyscreen.png");
+        gameoverTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        // gameplay textures
         circleTexture = new Texture("images/gameplay/circle.png");
         circleTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
@@ -43,10 +49,19 @@ public class GameAssetLoader {
         greensound = Gdx.audio.newSound(Gdx.files.internal("sounds/gameplay/greensound.mp3"));
         yellowsound = Gdx.audio.newSound(Gdx.files.internal("sounds/gameplay/yellowsound.mp3"));
         errorSound = Gdx.audio.newSound(Gdx.files.internal("sounds/gameplay/errorsound.mp3"));
+        gameoverSound = Gdx.audio.newSound(Gdx.files.internal("sounds/gameplay/gameoversound.mp3"));
 
         //fonts
-        font = new BitmapFont(Gdx.files.internal("fonts/text.fnt"));
-        font.getData().setScale(.25f, .25f);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/dimbo.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.size = 18;
+        parameter.color = Color.WHITE;
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 2;
+
+        font = generator.generateFont(parameter);
+        generator.dispose();
 
     }
 
@@ -57,7 +72,8 @@ public class GameAssetLoader {
         squareTexture.dispose();
         squareTextureGlow.dispose();
         circleTexture.dispose();
-        gameplayBgTexture.dispose();
+        backgroundTexture.dispose();
+        gameoverTexture.dispose();
 
         // sounds
         redsound.dispose();
@@ -65,6 +81,7 @@ public class GameAssetLoader {
         greensound.dispose();
         yellowsound.dispose();
         errorSound.dispose();
+        gameoverSound.dispose();
 
         // fonts
         font.dispose();
