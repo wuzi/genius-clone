@@ -10,9 +10,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class GameAssetLoader {
-    public static Texture squareTexture, squareTextureGlow, circleTexture, backgroundTexture, gameoverTexture;
+    public static Texture squareTexture, squareTextureGlow, circleTexture, backgroundTexture, gameoverTexture, restartButtonTexture, backButtonTexture;
     public static TextureRegion greenSquare, redSquare, yellowSquare, blueSquare;
     public static TextureRegion greenSquareGlow, redSquareGlow, yellowSquareGlow, blueSquareGlow;
+    public static TextureRegion restartButtonReleased, restartButtonPressed, backButtonReleased, backButtonPressed;
     public static Sound redsound, bluesound, yellowsound, greensound, errorSound, gameoverSound;
     public static BitmapFont font;
 
@@ -42,6 +43,17 @@ public class GameAssetLoader {
         redSquareGlow = new TextureRegion(squareTextureGlow, 161, 0, 160, 160);
         yellowSquareGlow = new TextureRegion(squareTextureGlow, 322, 0, 160, 160);
         blueSquareGlow = new TextureRegion(squareTextureGlow, 483, 0, 160, 160);
+
+        //buttons
+        restartButtonTexture = new Texture("images/gameplay/buttons/restart.png");
+        restartButtonTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        restartButtonReleased = new TextureRegion(restartButtonTexture, 0, 0, 120, 131);
+        restartButtonPressed = new TextureRegion(restartButtonTexture, 0, 133, 120, 131);
+
+        backButtonTexture = new Texture("images/gameplay/buttons/back.png");
+        backButtonTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        backButtonReleased = new TextureRegion(backButtonTexture, 0, 0, 120, 131);
+        backButtonPressed = new TextureRegion(backButtonTexture, 0, 133, 120, 131);
 
         // sounds
         redsound = Gdx.audio.newSound(Gdx.files.internal("sounds/gameplay/redsound.mp3"));
@@ -74,6 +86,8 @@ public class GameAssetLoader {
         circleTexture.dispose();
         backgroundTexture.dispose();
         gameoverTexture.dispose();
+        restartButtonTexture.dispose();
+        backButtonTexture.dispose();
 
         // sounds
         redsound.dispose();
