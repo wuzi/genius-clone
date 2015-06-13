@@ -338,7 +338,8 @@ public class GameplayClassic implements InputProcessor {
                     mistakesRemaining = 3;
                     isRestartButtonDown = false;
                     isBackButtonDown = false;
-                    currentState = GameState.RUNNING;
+                    arrayColors.clear();
+                    currentState = GameState.READY;
                 } else if (checkTouchRegion(screenX, screenY, 36, 183, 120, 131)) {
                     myGame.setScreen(new MenuScreen(myGame));
                     this.dispose();
