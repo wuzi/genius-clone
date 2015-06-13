@@ -8,17 +8,17 @@ import com.geniusclone.game.GameplayClassic;
 public class GameScreen implements Screen {
 
     private Game myGame;
-    private GameplayClassic gamePlay;
+    private GameplayClassic gameplay;
 
     public GameScreen(Game g) {
         myGame = g;
-        gamePlay = new GameplayClassic();
-        Gdx.input.setInputProcessor(gamePlay);
+        gameplay = new GameplayClassic();
+        Gdx.input.setInputProcessor(gameplay);
     }
 
     @Override
     public void render(float delta) {
-        gamePlay.render();
+        gameplay.render();
     }
 
     @Override
@@ -45,6 +45,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        gamePlay.dispose();
+        gameplay.dispose();
     }
 }

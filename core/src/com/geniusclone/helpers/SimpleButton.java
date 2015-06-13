@@ -1,4 +1,4 @@
-package com.geniusclone.UI;
+package com.geniusclone.helpers;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -48,7 +48,7 @@ public class SimpleButton {
         Vector3 worldCoordinates = new Vector3(x, y, 0);
         camera.unproject(worldCoordinates);
 
-        if(checkIfClicked(worldCoordinates.x, worldCoordinates.y)) {
+        if (checkIfClicked(worldCoordinates.x, worldCoordinates.y)) {
             isPressed = true;
         }
     }
@@ -60,11 +60,10 @@ public class SimpleButton {
         Vector3 worldCoordinates = new Vector3(x, y, 0);
         camera.unproject(worldCoordinates);
 
-        if(isPressed && checkIfClicked(worldCoordinates.x, worldCoordinates.y)) {
+        if (isPressed && checkIfClicked(worldCoordinates.x, worldCoordinates.y)) {
             isPressed = false;
             lastTimeDown = System.currentTimeMillis() + 200;
-        }
-        else if(isPressed) {
+        } else if (isPressed) {
             isPressed = false;
         }
     }
