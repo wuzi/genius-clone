@@ -69,7 +69,7 @@ public class GameplayClassic implements InputProcessor {
         blueSquareGlow.setPosition(160, 320);
 
         circle = new Sprite(GameAssetLoader.circleTexture);
-        circle.setPosition(118, 247);
+        circle.setPosition(120, 265);
 
 
     }
@@ -86,7 +86,7 @@ public class GameplayClassic implements InputProcessor {
                 batch.draw(GameAssetLoader.yellowSquare, yellowSquare.getX(), yellowSquare.getY());
                 batch.draw(GameAssetLoader.blueSquare, blueSquare.getX(), blueSquare.getY());
                 batch.draw(GameAssetLoader.greenSquare, greenSquare.getX(), greenSquare.getY());
-                batch.draw(GameAssetLoader.circleTexture, 120, 265);
+                batch.draw(GameAssetLoader.circleTexture, circle.getX(), circle.getY());
                 GameAssetLoader.font.draw(batch, "START", 138, 325);
                 GameAssetLoader.font.draw(batch, "Touch start to begin", 80, 50);
                 batch.end();

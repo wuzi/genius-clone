@@ -54,7 +54,7 @@ public class MenuScreen implements Screen {
             if (isAnimGoingUp) {
                 axisY++;
                 if (axisY > 380) isAnimGoingUp = false;
-            } else if (!isAnimGoingUp) {
+            } else {
                 axisY--;
                 if (axisY < 360) isAnimGoingUp = true;
             }
