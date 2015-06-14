@@ -31,7 +31,8 @@ public class MenuScreen implements Screen {
         exitButton = new SimpleButton(MenuAssetLoader.exitButtonReleased, MenuAssetLoader.exitButtonPressed, 90, 100, MenuAssetLoader.exitButtonReleased.getRegionWidth(), MenuAssetLoader.exitButtonReleased.getRegionHeight());
         Gdx.input.setInputProcessor(new com.geniusclone.helpers.MenuInputHandler(playButton, exitButton, optionButton));
 
-        MenuAssetLoader.menuMusic.loop();
+        MenuAssetLoader.menuMusic.play();
+        MenuAssetLoader.menuMusic.setLooping(true);
     }
 
     @Override

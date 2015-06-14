@@ -1,7 +1,7 @@
 package com.geniusclone.helpers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class MenuAssetLoader {
     public static Texture playButtonTexture, exitButtonTexture, optionButtonTexture, logoTexture, backgroundTexture;
     public static TextureRegion playButtonReleased, playButtonPressed, exitButtonReleased, exitButtonPressed, optionButtonPressed, optionButtonReleased;
-    public static Sound menuMusic;
+    public static Music menuMusic;
 
     public static void load() {
         // playButtons
@@ -42,7 +42,7 @@ public class MenuAssetLoader {
         logoTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         // music
-        menuMusic = Gdx.audio.newSound(Gdx.files.internal("sounds/menumusic.mp3"));
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/menumusic.mp3"));
     }
 
     public static void dispose() {
