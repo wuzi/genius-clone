@@ -4,6 +4,7 @@ This is a clone of the game Genius for Android and PC.
 This project i started with 2 friends, just for fun.
 
 It uses the libGDX framework.
+
 It was written using Android Studio.
 
 # Pictures
